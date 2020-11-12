@@ -144,6 +144,7 @@
         <module>webgoat-server</module>
         <module>webwolf</module>
         <module>webgoat-integration-tests</module>
+        <module>webgoat-selenium-tests</module>
     </modules>
 
     <dependencies>
