@@ -34,6 +34,7 @@ public class Driver {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
         options.addArguments("--disable-gpu");
+        options.addArguments("--disable-logging");
         if (verbose) {
             options.addArguments("--verbose");
         }
