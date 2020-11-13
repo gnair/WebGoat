@@ -12,6 +12,9 @@ public class Driver {
     static private final long DefaultTimeoutInSeconds = 2;
     static private Driver __onlyInstance = null;
 
+    private ChromeDriver driver = null;
+    private String url = null;
+
 
     // Singleton class factory
     static synchronized Driver getOnlyInstance(String driver) {
@@ -35,20 +38,30 @@ public class Driver {
             options.addArguments("--verbose");
         }
 
-        ChromeDriver driver = new ChromeDriver(options);
+        this.driver = new ChromeDriver(options);
 
         try {
-            // Login
-            driver.get(url + "/login");
-            driver.manage().timeouts().implicitlyWait(DefaultTimeoutInSeconds, TimeUnit.SECONDS);
+            this.url = url;
 
-
-            driver.findElement(By.name("username")).sendKeys(user);
-            driver.findElement(By.name("password")).sendKeys(password);
-            driver.findElement(By.className("btn")).click();
+            login(user, password);
 
         } finally {
             driver.quit();
         }
+    }
+
+    private void login(String user, String password) {
+        // Login
+        driver.get(getBaseUrl() + "/login");
+        driver.manage().timeouts().implicitlyWait(DefaultTimeoutInSeconds, TimeUnit.SECONDS);
+
+
+        driver.findElement(By.name("username")).sendKeys(user);
+        driver.findElement(By.name("password")).sendKeys(password);
+        driver.findElement(By.className("btn")).click();
+    }
+
+    private String getBaseUrl() {
+        return this.url;
     }
 }
