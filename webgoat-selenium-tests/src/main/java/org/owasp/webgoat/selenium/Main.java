@@ -5,7 +5,8 @@ import org.apache.commons.cli.*;
 
 
 public class Main {
-    static private String driver = "/opt/google/chrome/chromedriver";
+
+    static private String driver = "/opt/google/chrome/chromedriver"; // TODO: For now we rely on Chrome Driver
     static private String url = "http://localhost:8080/WebGoat"; // Default URL
     static private String user = "webgoat"; // Default username
     static private String password = "webgoat"; // Default password

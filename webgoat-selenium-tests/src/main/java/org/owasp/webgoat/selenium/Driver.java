@@ -27,7 +27,6 @@ public class Driver {
 
     // The Selenium invocation.
     public void invoke(String url, String user, String password, boolean verbose) {
-        // TODO: For now we rely on Chrome Driver.
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
