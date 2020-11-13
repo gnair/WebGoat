@@ -10,6 +10,7 @@ public class Main {
     static private String url = "http://localhost:8080/WebGoat"; // Default URL
     static private String user = "webgoat"; // Default username
     static private String password = "webgoat"; // Default password
+    static private boolean register = false;
     static private boolean verbose = false;
 
 
@@ -21,6 +22,7 @@ public class Main {
                 .addOption("U", "url", true, "URL for WebGoat")
                 .addOption("u", "user", true, "User name to login")
                 .addOption("p", "password", true,  "Password to login")
+                .addOption("r", "register", false, "Register new user")
                 .addOption("v", "verbose", false, "Verbose output");
 
         CommandLineParser parser = new DefaultParser();
@@ -48,6 +50,10 @@ public class Main {
                 System.out.println("Using provided password");
             }
 
+            if (cmd.hasOption("r")) {
+                register = true;
+            }
+
             if (cmd.hasOption("v")) {
                 verbose = true;
             }
@@ -55,7 +61,7 @@ public class Main {
             // Invoke the selenium driver.
             Driver selenium = Driver.getOnlyInstance(driver);
 
-            selenium.invoke(url, user, password, verbose);
+            selenium.invoke(url, user, password, register, verbose);
 
         } catch (ParseException pe) {
             System.out.println("Error parsing command-line arguments!");

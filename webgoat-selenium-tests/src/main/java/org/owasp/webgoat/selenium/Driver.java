@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Driver {
 
-    static private final long DefaultTimeoutInSeconds = 2;
+    static private final long DefaultTimeoutInSeconds = 5;
     static private Driver __onlyInstance = null;
 
     private ChromeDriver driver = null;
@@ -29,7 +29,7 @@ public class Driver {
     }
 
     // The Selenium invocation.
-    public void invoke(String url, String user, String password, boolean verbose) {
+    public void invoke(String url, String user, String password, boolean register, boolean verbose) {
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
@@ -43,11 +43,30 @@ public class Driver {
         try {
             this.url = url;
 
-            login(user, password);
+            if (register) {
+                register(user, password);
+            } else {
+                login(user, password);
+            }
+
+            invokeSQLiTestCases();
 
         } finally {
             driver.quit();
         }
+    }
+
+    private void register(String user, String password) {
+        // Login
+        driver.get(getBaseUrl() + "/registration");
+        driver.manage().timeouts().implicitlyWait(DefaultTimeoutInSeconds, TimeUnit.SECONDS);
+
+        driver.findElement(By.id("username")).sendKeys(user);
+        driver.findElement(By.id("password")).sendKeys(password);
+        driver.findElement(By.id("matchingPassword")).sendKeys(password);
+        driver.findElement(By.name("agree")).click();
+        driver.findElement(By.className("btn-primary")).click();
+
     }
 
     private void login(String user, String password) {
@@ -58,7 +77,12 @@ public class Driver {
 
         driver.findElement(By.name("username")).sendKeys(user);
         driver.findElement(By.name("password")).sendKeys(password);
-        driver.findElement(By.className("btn")).click();
+        driver.findElement(By.className("btn-primary")).click();
+    }
+
+    private void invokeSQLiTestCases() {
+        // TODO
+
     }
 
     private String getBaseUrl() {
