@@ -3,26 +3,34 @@ package org.owasp.webgoat.selenium;
 import org.apache.commons.cli.*;
 
 
-// Chrome driver: /opt/google/chrome/chromedriver
 
 public class Main {
-    static String url = "http://localhost:8080/WebGoat"; // Default URL
-    static String user = "webgoat"; // Default username
-    static String pass = "webgoat"; // Default password
+    static private String driver = "/opt/google/chrome/chromedriver";
+    static private String url = "http://localhost:8080/WebGoat"; // Default URL
+    static private String user = "webgoat"; // Default username
+    static private String password = "webgoat"; // Default password
+    static private boolean verbose = false;
 
 
     public static void main(String[] args) {
 
 
         Options options = new Options();
-        options.addOption("U", "URL", true, "URL for WebGoat")
+        options.addOption("d", "driver", true, "Chrome driver for selenium")
+                .addOption("U", "url", true, "URL for WebGoat")
                 .addOption("u", "user", true, "User name to login")
-                .addOption("p", "password", true,  "Password to login");
+                .addOption("p", "password", true,  "Password to login")
+                .addOption("v", "verbose", false, "Verbose output");
 
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = null;
         try {
             cmd = parser.parse(options, args);
+
+            if (cmd.hasOption("d")) {
+                driver = cmd.getOptionValue("d");
+                System.out.println("Using Chrome driver: " + driver);
+            }
 
             if (cmd.hasOption("U")) {
                 url = cmd.getOptionValue("U");
@@ -35,9 +43,19 @@ public class Main {
             }
 
             if (cmd.hasOption("p")) {
-                pass = cmd.getOptionValue("p");
-                System.out.println("Using provided password: " + pass);
+                password = cmd.getOptionValue("p");
+                System.out.println("Using provided password");
             }
+
+            if (cmd.hasOption("v")) {
+                verbose = true;
+            }
+
+            // Invoke the selenium driver.
+            Driver selenium = Driver.getOnlyInstance(driver);
+
+            selenium.invoke(url, user, password, verbose);
+
         } catch (ParseException pe) {
             System.out.println("Error parsing command-line arguments!");
             System.out.println("");
