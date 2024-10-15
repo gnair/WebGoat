@@ -26,6 +26,7 @@ import com.beust.jcommander.internal.Lists;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.EvictingQueue;
 import com.google.common.collect.Maps;
+import static io.github.pixee.security.XMLInputFactorySecurity.hardenFactory;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -84,7 +85,7 @@ public class Comments {
     protected Comment parseXml(String xml) throws Exception {
         JAXBContext jc = JAXBContext.newInstance(Comment.class);
 
-        XMLInputFactory xif = XMLInputFactory.newFactory();
+        XMLInputFactory xif = hardenFactory(XMLInputFactory.newFactory());
         xif.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, true);
         xif.setProperty(XMLInputFactory.IS_VALIDATING, false);
 
