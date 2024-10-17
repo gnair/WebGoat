@@ -58,5 +58,5 @@ jobs:
           tool: sonar
           sonar-host-url: ${{ vars.SONAR_HOST_URL }}
           sonar-token: ${{ secrets.SONAR_TOKEN }}
-          sonar-component-key: 'WebGoat'
+          sonar-component-key: 'gnair_pixee'
           
