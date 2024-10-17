@@ -49,8 +49,8 @@ jobs:
         run: |
           mvn -B compile org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
           -Dsonar.organization='gnair' \
-          -Dsonar.projectKey='WebGoat' \
-          -Dsonar.projectName='WebGoat'
+          -Dsonar.projectKey='gnair_pixee' \
+          -Dsonar.projectName='Pixee'
 
       - name: Upload SonarQube Results to Pixeebot
         uses: pixee/upload-tool-results-action@v2
