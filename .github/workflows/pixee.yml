@@ -49,8 +49,8 @@ jobs:
         run: |
           mvn -B compile org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
           -Dsonar.organization='gnair' \
-          -Dsonar.projectKey='gnair_pixee' \
-          -Dsonar.projectName='Pixee'
+          -Dsonar.projectKey='gnair_webgoat' \
+          -Dsonar.projectName='WebGoat'
 
       - name: Upload SonarQube Results to Pixeebot
         uses: pixee/upload-tool-results-action@v2
@@ -58,5 +58,5 @@ jobs:
           tool: sonar
           sonar-host-url: ${{ vars.SONAR_HOST_URL }}
           sonar-token: ${{ secrets.SONAR_TOKEN }}
-          sonar-component-key: 'gnair_pixee'
+          sonar-component-key: 'gnair_webgoat'
           
